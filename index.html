@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Bairro Online</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Barra de navegação -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container">
+      <a class="navbar-brand" href="#">Bairro Online</a>
+    </div>
+  </nav>
+
+  <!-- Cabeçalho -->
+  <header class="text-center p-4">
+    <h1 class="h4">Divulgação de serviços entre moradores de Campo Grande/MS</h1>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="container my-4">
+    <div class="row">
+      <!-- Formulário -->
+      <div class="col-lg-6">
+        <h2 class="h5 mb-3">Cadastre seu serviço</h2>
+        <form action="cadastrar.php" method="POST">
+          <input type="text" name="nome" class="form-control mb-2" placeholder="Seu nome" required>
+          <input type="tel" name="telefone" class="form-control mb-2" placeholder="Telefone (ex: 67987654321)" pattern="\d{11}" required>
+          <input type="text" name="endereco" class="form-control mb-2" placeholder="Endereço" required>
+          <input type="text" name="servico" class="form-control mb-3" placeholder="Serviço oferecido" required>
+          <button type="submit" class="btn btn-success">Cadastrar</button>
+        </form>
+      </div>
+
+      <!-- Logo lateral -->
+      <div class="col-lg-6 text-center mt-4 mt-lg-0">
+        <img src="img/logo.png" alt="Logo do site" class="img-fluid rounded shadow-sm imagem-ajustada">
+      </div>
+    </div>
+
+    <!-- Lista de serviços -->
+    <section class="mt-5">
+      <h3 class="h6">Serviços cadastrados</h3>
+      <div class="row g-3 mt-2" id="servicos"></div>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="bg-dark text-white text-center py-2">
+    <small>&copy; 2025 - Bairro Online</small>
+  </footer>
+
+  <!-- Modal de sucesso -->
+  <div class="modal fade" id="modalSucesso" tabindex="-1" aria-labelledby="modalSucessoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-success">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="modalSucessoLabel">Cadastro realizado</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body text-center">
+          <p>Seu serviço foi cadastrado com sucesso!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("sucesso") === "1") {
+      const modal = new bootstrap.Modal(document.getElementById("modalSucesso"));
+      modal.show();
+    }
+  </script>
+</body>
+</html>
