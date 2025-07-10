@@ -1,0 +1,17 @@
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+.imagem-ajustada {
+  max-width: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+.card-servico {
+  background-color: #e9fce9;
+  border: 1px solid #9fd89f;
+}
+@media (max-width: 768px) {
+  .imagem-ajustada {
+    margin-top: 1.5rem;
+  }
+}
