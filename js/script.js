@@ -1,26 +1,65 @@
-fetch("listar.php")
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById("servicos");
-    container.innerHTML = "";
-    data.forEach(item => {
-      const zap = `https://wa.me/55${item.telefone}`;
-      const telFormatado = `(${item.telefone.slice(0,2)}) ${item.telefone.slice(2,7)}-${item.telefone.slice(7)}`;
-      const card = document.createElement("div");
-      card.className = "col-md-4";
-      card.innerHTML = `
-        <div class="card card-servico p-3 shadow-sm">
-          <h5>${item.nome}</h5>
-          <p><strong>${item.nome_servico}</strong></p>
-          <p>${item.endereco}</p>
-          <p>Telefone: ${telFormatado}
-            <a href="${zap}" target="_blank" class="btn btn-sm btn-success ms-2">WhatsApp</a>
-          </p>
-        </div>
-      `;
-      container.appendChild(card);
+// Aguarda envio do formulário de busca
+document.querySelector(".pesquisa-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  carregarServicos(1);
+});
+
+// Carrega serviços ao abrir a página
+window.addEventListener("load", function () {
+  carregarServicos(1);
+});
+
+// Função principal para carregar serviços da página atual
+function carregarServicos(pagina) {
+  const campoBusca = document.getElementById("busca");
+  const termo = campoBusca ? campoBusca.value.trim() : "";
+
+  fetch(`listar.php?pagina=${pagina}&busca=${encodeURIComponent(termo)}`)
+    .then(function (resposta) {
+      return resposta.text();
+    })
+    .then(function (html) {
+      const areaServicos = document.getElementById("servicos");
+      if (areaServicos) {
+        areaServicos.innerHTML = html;
+      }
+      atualizarPaginacao(pagina, termo);
+    })
+    .catch(function (erro) {
+      console.error("Erro ao carregar serviços:", erro);
     });
-  })
-  .catch(error => {
-    console.error("Erro ao carregar serviços:", error);
+}
+
+// Atualiza os botões de paginação com base no total de páginas
+function atualizarPaginacao(paginaAtual, termo) {
+  fetch(`listar.php?total=1&busca=${encodeURIComponent(termo)}`)
+    .then(function (resposta) {
+      return resposta.json();
+    })
+    .then(function (dados) {
+      const totalPaginas = dados.total;
+      const areaPaginacao = document.getElementById("paginacao");
+      if (areaPaginacao) {
+        areaPaginacao.innerHTML = "";
+
+        for (let i = 1; i <= totalPaginas; i++) {
+          const botao = document.createElement("button");
+          botao.innerText = i;
+          botao.className = "btn btn-outline-success m-1";
+          botao.disabled = i === paginaAtual;
+          adicionarEventoPaginacao(botao, i);
+          areaPaginacao.appendChild(botao);
+        }
+      }
+    })
+    .catch(function (erro) {
+      console.error("Erro ao gerar paginação:", erro);
+    });
+}
+
+// Função separada para evitar função inline no loop
+function adicionarEventoPaginacao(botao, numeroPagina) {
+  botao.addEventListener("click", function () {
+    carregarServicos(numeroPagina);
   });
+}
