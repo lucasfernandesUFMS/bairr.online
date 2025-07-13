@@ -31,7 +31,7 @@
           <input type="text" name="nome" class="form-control mb-2" placeholder="Seu nome" required>
           <input type="tel" name="telefone" class="form-control mb-2" placeholder="Telefone (ex: 67987654321)" pattern="\d{11}" required>
           <input type="text" name="endereco" class="form-control mb-2" placeholder="Endereço" required>
-          <input type="text" name="servico" class="form-control mb-3" placeholder="Serviço oferecido" required>
+          <input type="text" name="nome_servico" class="form-control mb-3" placeholder="Serviço oferecido" required>
           <button type="submit" class="btn btn-success">Cadastrar</button>
         </form>
       </div>
@@ -42,10 +42,21 @@
       </div>
     </div>
 
+    <!-- Campo de busca -->
+    <div class="row mt-5">
+      <div class="col">
+        <form class="d-flex pesquisa-form">
+          <input type="text" id="busca" class="form-control me-2" placeholder="Buscar serviço por nome">
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+      </div>
+    </div>
+
     <!-- Lista de serviços -->
-    <section class="mt-5">
+    <section class="mt-4">
       <h3 class="h6">Serviços cadastrados</h3>
       <div class="row g-3 mt-2" id="servicos"></div>
+      <div class="text-center mt-3" id="paginacao"></div>
     </section>
   </main>
 
